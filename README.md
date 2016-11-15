@@ -29,3 +29,44 @@ Check access and allow user to interact by typing his password when PolKit requi
 ```
 $ pkquery -check-access -allow-password org.freedesktop.udisks2.filesystem-fstab
 ```
+
+## Library Usage
+
+### Authorization checking
+```go
+authority, err := polkit.NewAuthority()
+if err != nil {
+	panic(err)
+}
+
+result, err := authority.CheckAuthorization(
+	"org.freedesktop.udisks2.filesystem-fstab",
+	nil,
+	polkit.CheckAuthorizationAllowUserInteraction, "",
+)
+
+if err != nil {
+	panic(err)
+}
+
+fmt.Printf("Is authorized: %t\n", result.IsAuthorized)
+fmt.Printf("Is challenge:  %t\n", result.IsChallenge)
+fmt.Printf("Details:       %v\n", result.Details)
+```
+
+### Actions Enumerating
+```go
+authority, err := polkit.NewAuthority()
+if err != nil {
+	panic(err)
+}
+
+actions, err := authority.EnumerateActions("")
+if err != nil {
+	panic(err)
+}
+
+for _, action := range actions {
+	fmt.Println(action.ActionID)
+}
+````
