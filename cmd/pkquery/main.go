@@ -4,8 +4,9 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"github.com/amenzhinsky/go-polkit"
 	"os"
+
+	"github.com/amenzhinsky/go-polkit"
 )
 
 var (
